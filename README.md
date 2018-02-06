@@ -2,4 +2,5 @@
 
 ## Dependencies
 
-- Passport-LinkedIn
+- Express
+- Express-Session
