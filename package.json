@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/dominic-farquharson/react-linkedin-login#readme",
   "dependencies": {
+    "axios": "^0.17.1",
+    "dotenv": "^5.0.0",
     "ejs": "^2.5.7",
     "express": "^4.16.2"
   },
