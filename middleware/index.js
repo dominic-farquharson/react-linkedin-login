@@ -22,7 +22,10 @@ const exchangeAccessToken = (req, res, next) => {
   })
     .then(response => {
       const { access_token, expires_in } = response.data;
-      res.status(200).json({ access_token, expires_in })
+
+      res.locals.access_token = access_token;
+      res.locals.expires_in = expires_in;
+      next();
     })
     .catch(function (error) {
       if (error.response) {
@@ -72,7 +75,52 @@ const checkState = (req, res, next) => {
   next();
 }
 
+const profileData = (req, res, next) => {
+  const {access_token} = res.locals;
+  const info = 'first-name,last-name,location,picture-urls::(original),email-address,picture-url'
+
+  axios({
+    url: `https://api.linkedin.com/v1/people/~:(${info})?format=json`,
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${access_token}`
+    }
+  })
+    .then(response => {
+      console.log('response ', response)
+      res.json(response.data)
+    })
+    .catch(function (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+        // res.send('error')
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request);
+        // res.send('no request received')
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        // res.send(error.message)
+      }
+      console.log('setting errr')
+      req.session.error = 'Error logging in';
+
+      // console.log(error.config);
+      // res.redirect('/login')
+      next(error)
+    }); 
+  // res.status(200).json({ access_token, expires_in })
+}
+
 module.exports = {
   checkState,
-  exchangeAccessToken
+  exchangeAccessToken,
+  profileData
 }
