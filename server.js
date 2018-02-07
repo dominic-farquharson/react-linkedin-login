@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const session = require('express-session');
+const randomString = require('randomstring'); // gen random strings
 const { checkState, exchangeAccessToken } = require('./middleware/index');
 
 
@@ -20,13 +21,19 @@ app.use(session({
 }));
 
 app.get('/login', (req, res) => {
+  // generate random string
+  const state = randomString.generate();
+  // store state in session
+  req.session.state = state;
+  
   res.render('login', {
    // pass down errors
-   error: req.session.error
+   error: req.session.error,
+   state // pass as local variable to view
   });
-
-  // clear session
-  req.session.destroy();
+  
+  // Need to clear state + error
+  // req.session.destroy();
 });
 
 

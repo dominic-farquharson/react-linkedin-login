@@ -3,7 +3,7 @@ const axios = require('axios');
 // retrieve access token
 const exchangeAccessToken = (req, res, next) => {
   const { code, state, error, error_description } = req.query;
-  
+
   const data = {
     grant_type: 'authorization_code',
     code,
@@ -51,15 +51,13 @@ const exchangeAccessToken = (req, res, next) => {
     }); 
 }
 
-// hard coding state for now
-const genState = '987654321';
-
+// check if state from query matches string in session
 const checkState = (req, res, next) => {
   // const state = req.session.state;
   const { code, state, error, error_description } = req.query;
 
   // first check if state matches
-  if(state !== genState) {
+  if(state !== req.session.state) {
     return res.status(401).send('not authorized');
   }
 
