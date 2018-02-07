@@ -23,7 +23,9 @@
     "axios": "^0.17.1",
     "dotenv": "^5.0.0",
     "ejs": "^2.5.7",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "randomstring": "^1.1.5"
   },
   "devDependencies": {
     "nodemon": "^1.14.12"
