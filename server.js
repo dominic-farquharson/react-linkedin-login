@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 const randomString = require('randomstring'); // gen random strings
-const { checkState, exchangeAccessToken } = require('./middleware/index');
+const { checkState, exchangeAccessToken, profileData } = require('./middleware/index');
 
 
 require('dotenv').config();
@@ -37,7 +37,7 @@ app.get('/login', (req, res) => {
 });
 
 
-app.get('/auth/linkedin/callback', checkState, exchangeAccessToken);
+app.get('/auth/linkedin/callback', checkState, exchangeAccessToken, profileData);
 
 // start server
 const PORT = 8080;
