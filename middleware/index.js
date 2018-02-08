@@ -4,10 +4,13 @@ const axios = require('axios');
 const exchangeAccessToken = (req, res, next) => {
   const { code, state, error, error_description } = req.query;
 
+  // determine redirect uri based on env
+  const redirect_uri = process.env.NODE_ENV === 'development' ? `http://localhost:8080/auth/linkedin/callback` : `https://react-linkedin-login.herokuapp.com/auth/linkedin/callback`;
+
   const data = {
     grant_type: 'authorization_code',
     code,
-    redirect_uri: 'http://localhost:8080/auth/linkedin/callback',
+    redirect_uri,
     client_id: process.env.CLIENT_ID,
     client_secret: process.env.CLIENT_SECRET
   };
