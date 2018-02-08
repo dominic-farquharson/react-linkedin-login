@@ -61,15 +61,16 @@ class App extends Component {
       .then(res => {
         console.log('response ', res)
         if(res.error) throw 'error fetching profile info';
-        this.fetchProfileInfo(res.data.state)
+
+        this.fetchProfileInfo(res.data.state, res.data.redirect_uri)
       })
       .catch(err => {
         console.log('error ', err)
       })
   }
 
-  fetchProfileInfo(state) {
-    window.location.href =`https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=7852nj8xbs8dab&redirect_uri=http://localhost:8080/auth/linkedin/callback&state=${state}&scope=r_basicprofile r_emailaddress`
+  fetchProfileInfo(state, redirect_uri) {
+    window.location.href =`https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=7852nj8xbs8dab&redirect_uri=${redirect_uri}&state=${state}&scope=r_basicprofile r_emailaddress`
   }
 
   render() {
