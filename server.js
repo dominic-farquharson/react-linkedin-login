@@ -70,7 +70,7 @@ app.get('/login', (req, res) => {
 app.get('/auth/linkedin/callback', checkState, exchangeAccessToken, profileData);
 
 // start server
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`server listning on PORT: ${PORT}`);
 });
