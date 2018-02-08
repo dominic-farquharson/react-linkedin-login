@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const session = require('express-session');
+const path = require('path');
 const randomString = require('randomstring'); // gen random strings
 const { checkState, exchangeAccessToken, profileData } = require('./middleware/index');
 
@@ -10,6 +11,9 @@ require('dotenv').config();
 // config
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
+// only serve static contents on the root
+app.use(express.static(__dirname + '/public'));
+
 
 app.use(session({
   secret: process.env.SECRET_KEY,
@@ -62,11 +66,8 @@ app.get('/login', (req, res) => {
 });
 
 
-app.get('/auth/linkedin/callback', checkState, exchangeAccessToken, profileData);
-app.get('/', (req, res, next) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'));
-});
 
+app.get('/auth/linkedin/callback', checkState, exchangeAccessToken, profileData);
 
 // start server
 const PORT = 8080;
