@@ -55,7 +55,7 @@ app.get('/login', (req, res) => {
   //  state // pass as local variable to view
   // });
 
-  const redirect_uri = process.env.NODE_ENV === 'development' ? `http://locahost:3000/auth/linkedin/callback` : `https://react-linkedin-login.herokuapp.com/auth/linkedin/callback`;
+  const redirect_uri = process.env.NODE_ENV === 'development' ? `http://localhost:8080/auth/linkedin/callback` : `https://react-linkedin-login.herokuapp.com/auth/linkedin/callback`;
   res.json({
     // pass down errors
     error: req.session.error || null,
