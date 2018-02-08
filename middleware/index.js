@@ -61,6 +61,7 @@ const checkState = (req, res, next) => {
 
   // first check if state matches
   if(state !== req.session.state) {
+    console.log('state ', state, req.session.state)
     return res.status(401).send('not authorized');
   }
 
@@ -88,7 +89,12 @@ const profileData = (req, res, next) => {
   })
     .then(response => {
       console.log('response ', response)
-      res.json(response.data)
+
+      // store profile data in session
+      req.session.profile = response.data;   
+      
+      res.redirect('http://localhost:3000')
+      // res.json(response.data)
     })
     .catch(function (error) {
       if (error.response) {
