@@ -30,7 +30,7 @@ app.get('/login', (req, res) => {
   if(req.query.profile) {
     if(req.session.profile) {
       res.json({
-        profile: req.session.profile
+        profile: req.session.profile,
       })
       req.session.destroy(); // clear session ?
       return;
@@ -55,10 +55,13 @@ app.get('/login', (req, res) => {
   //  state // pass as local variable to view
   // });
 
+  const redirect_uri = process.env.NODE_ENV === 'development' ? `http://locahost:3000/auth/linkedin/callback` : `https://react-linkedin-login.herokuapp.com/auth/linkedin/callback`;
   res.json({
     // pass down errors
     error: req.session.error || null,
-    state // pass as local variable to view
+    state, // pass as local variable to view
+    redirect_uri
+
   });
   
   // Need to clear state + error
