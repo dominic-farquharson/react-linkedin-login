@@ -64,7 +64,7 @@ app.get('/login', (req, res) => {
 
 app.get('/auth/linkedin/callback', checkState, exchangeAccessToken, profileData);
 app.get('/', (req, res, next) => {
-  res.send('hello')
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
 
