@@ -21,15 +21,40 @@ app.use(session({
 }));
 
 app.get('/login', (req, res) => {
+  // check if user is asking for profile data
+  console.log('profile ', req.query.profile)
+  if(req.query.profile) {
+    if(req.session.profile) {
+      res.json({
+        profile: req.session.profile
+      })
+      req.session.destroy(); // clear session ?
+      return;
+    } else {
+      res.json({
+        profile: null
+      })
+      req.session.destroy(); // clear session?
+      return;
+    }
+    // destroy session
+  }
   // generate random string
   const state = randomString.generate();
   // store state in session
   req.session.state = state;
+
   
-  res.render('login', {
-   // pass down errors
-   error: req.session.error,
-   state // pass as local variable to view
+  // res.render('login', {
+  //  // pass down errors
+  //  error: req.session.error,
+  //  state // pass as local variable to view
+  // });
+
+  res.json({
+    // pass down errors
+    error: req.session.error || null,
+    state // pass as local variable to view
   });
   
   // Need to clear state + error
@@ -38,6 +63,10 @@ app.get('/login', (req, res) => {
 
 
 app.get('/auth/linkedin/callback', checkState, exchangeAccessToken, profileData);
+app.get('/', (req, res, next) => {
+  res.send('hello')
+});
+
 
 // start server
 const PORT = 8080;
