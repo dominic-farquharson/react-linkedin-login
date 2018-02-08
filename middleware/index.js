@@ -93,7 +93,7 @@ const profileData = (req, res, next) => {
       // store profile data in session
       req.session.profile = response.data;   
       
-      res.redirect('http://localhost:3000')
+      res.redirect('/')
       // res.json(response.data)
     })
     .catch(function (error) {
