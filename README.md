@@ -15,15 +15,18 @@ Retrieve linkedin access token and user data w/o passport.
 - `cd` into the directory and run npm install.
 - Create a .env file in the root of your project.
 - Add relevant local variables to your .env file.
+- run `npm run start` to start the node server. 
+  - The built react app will be served.
 
 Sample .env file
 ```
 SECRET_KEY = secret_key
 CLIENT_ID = linkedin_client_id
 CLIENT_SECRET = linkedin_secret
+NODE_ENV = 'development'
 ```
 
-## Overflow
+## Overview
 
 - The server initially renders a react frontend.
 
