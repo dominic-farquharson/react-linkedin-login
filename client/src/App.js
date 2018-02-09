@@ -2,11 +2,24 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
+import LinkedInImageDefault from './signin_with_linkedin-buttons/Non-Retina/Sign-in-Large---Default.png';
+import LinkedInImageHover from './signin_with_linkedin-buttons/Non-Retina/Sign-in-Large---Hover.png';
 
 const LinkedIn = props => {
+  const { hover, toggleButton } = props;
+
   return (
     <div>
-      <div onClick={props.login}>Login with linkedIn</div>
+      <div>
+        <img 
+          className="linkedin__button-hover"
+          onMouseOver={toggleButton}
+          onMouseLeave={toggleButton}
+          src={!hover? LinkedInImageDefault : LinkedInImageHover}
+          title="login with linkedin" 
+          alt="login with linkedin"
+         />
+      </div>
     </div>
   )
 }
@@ -32,9 +45,14 @@ class App extends Component {
     super();
 
     this.state = {
-      profile: null
+      profile: null,
+      hover: false,
     }
+
+    // bind
+    this.toggleButton = this.toggleButton.bind(this);
   }
+
   componentDidMount() {
     axios({
       url: '/login?profile=true',
@@ -51,6 +69,14 @@ class App extends Component {
           err
         })
       })
+  }
+
+  toggleButton() {
+    this.setState(prevState => {
+      return {
+        hover: !prevState.hover
+      };
+    });
   }
 
   login() {
@@ -78,6 +104,8 @@ class App extends Component {
       <div className="App">
         <LinkedIn
           login={() => this.login()}
+          hover={this.state.hover}
+          toggleButton={this.toggleButton}
         />
 
         <Profile 
