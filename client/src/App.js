@@ -6,12 +6,13 @@ import LinkedInImageDefault from './signin_with_linkedin-buttons/Non-Retina/Sign
 import LinkedInImageHover from './signin_with_linkedin-buttons/Non-Retina/Sign-in-Large---Hover.png';
 
 const LinkedIn = props => {
-  const { hover, toggleButton } = props;
+  const { hover, toggleButton, login } = props;
 
   return (
     <div>
       <div>
         <img 
+          onClick={login}
           className="linkedin__button-hover"
           onMouseOver={toggleButton}
           onMouseLeave={toggleButton}
