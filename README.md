@@ -2,8 +2,6 @@
 
 Retrieve linkedin access token and user data w/o passport.
 
-### [Deployed link](https://react-linkedin-login.herokuapp.com/)
-
 ## Dependencies
 
 - Node
